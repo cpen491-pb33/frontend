@@ -1,20 +1,45 @@
 import React, { useState } from 'react';
 import MapView, { Callout, Circle, Marker } from 'react-native-maps';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
 export default function App() {
-	const [pin, setPin] = useState({ latitude: 37.78825, longitude: -122.4324 });
+	const [pin, setPin] = useState({ latitude: 49.2606, longitude: -123.246 });
+	const [region, setRegion] = useState({ latitude: 49.2606, longitude: -123.246 });
 
 	return (
-		<View style={styles.container}>
+		<View style={{ marginTop: 50, flex: 1 }}>
+			<GooglePlacesAutocomplete
+				placeholder='Search'
+				fetchDetails={true}
+				GooglePlacesSearchQuery={{
+					rankby: 'distance',
+				}}
+				onPress={(data, details = null) => {
+					// 'details' is provided when fetchDetails = true
+					console.log(data, details);
+				}}
+				query={{
+					key: 'AIzaSyCtVD1zbzxRZBqsQNTQtn2UweORQkSj80I',
+					language: 'en',
+					component: 'country:ca',
+					radius: 30000,
+					location: `${region.latitude}, ${region.longitude}`,
+				}}
+				styles={{
+					container: { flex: 0, position: 'absolute', width: '100%', zIndex: 1 },
+					listView: { backgroundColor: 'white' },
+				}}
+			/>
 			<MapView
 				style={styles.map}
 				initialRegion={{
-					latitude: 37.78825,
-					longitude: -122.4324,
+					latitude: 49.2606,
+					longitude: -123.246,
 					latitudeDelta: 0.0922,
 					longitudeDelta: 0.0421,
 				}}
+				provider='google'
 			>
 				<Marker
 					coordinate={pin}
