@@ -20,7 +20,7 @@ export default function App() {
 					console.log(data, details);
 				}}
 				query={{
-					key: 'AIzaSyCtVD1zbzxRZBqsQNTQtn2UweORQkSj80I',
+					key: 'API_KEY',
 					language: 'en',
 					component: 'country:ca',
 					radius: 30000,
