@@ -53,7 +53,26 @@ const MapScreen = () => {
 					longitudeDelta: 0.0421,
 				}}
 				provider='google'
-			>
+
+				onPress={ (event) => {
+					console.log(event.nativeEvent.coordinate)
+					let data = {
+					  "coordinates": event.nativeEvent.coordinate
+					}
+					fetch("http://localhost:8000/api/detection", {
+					  method: "POST",
+					  body: JSON.stringify(data)
+					})
+					  .then(response => response.json())
+					  .then(response => {
+						console.log(response.content);
+						console.log(response.originator.name)
+					  })
+					  .catch(err => {
+						console.log(err);
+					  });
+				  } }
+				>
 				<Marker
 					coordinate={{ latitude: region.latitude, longitude: region.longitude }}
 					pinColor='red'
