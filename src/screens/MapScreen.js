@@ -5,12 +5,6 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 
 const MapScreen = () => {
 	const [pin, setPin] = useState({ latitude: 49.2606, longitude: -123.246 });
-	const [region, setRegion] = useState({
-		latitude: 49.2606,
-		longitude: -123.246,
-		latitudeDelta: 0.0922,
-		longitudeDelta: 0.0421,
-	});
 
 	return (
 		<View>
@@ -23,11 +17,9 @@ const MapScreen = () => {
 				onPress={(data, details = null) => {
 					// 'details' is provided when fetchDetails = true
 					console.log(data, details);
-					setRegion({
+					setPin({
 						latitude: details.geometry.location.lat,
 						longitude: details.geometry.location.lng,
-						latitudeDelta: 0.0922,
-						longitudeDelta: 0.0421,
 					});
 				}}
 				query={{
@@ -35,7 +27,7 @@ const MapScreen = () => {
 					language: 'en',
 					component: 'country:ca',
 					radius: 30000,
-					location: `${region.latitude}, ${region.longitude}`,
+					location: `${pin.latitude}, ${pin.longitude}`,
 				}}
 				styles={{
 					container: { flex: 0, position: 'absolute', width: '100%', zIndex: 1 },
@@ -54,10 +46,6 @@ const MapScreen = () => {
 				}}
 				provider='google'
 			>
-				<Marker
-					coordinate={{ latitude: region.latitude, longitude: region.longitude }}
-					pinColor='red'
-				/>
 				<Marker
 					coordinate={pin}
 					pinColor='green'
